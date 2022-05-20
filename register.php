@@ -35,7 +35,8 @@ if(isset($_POST['register']))
 	
 	if(!isset($error))
 	{
-		$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
+		// Let's see if this works!
+		$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $db);
 		$register_password = md5($register_password);
 		$password_hash = password_hash($register_password, PASSWORD_DEFAULT);
 		$check_result = $mysqli -> query('SELECT id from users where username="'.$mysqli ->real_escape_string($register_username).'"') or die($mysqli -> error);
@@ -70,7 +71,7 @@ if(isset($error))
 
 ?>
 
-<form method='POST'>
+<form action="register.php" method='POST'>
 Username: <input type='text' name='register_username'><br>
 Password: <input type='password' name='register_password'><br>
 Check password: <input type='password' name='register_password_check'>

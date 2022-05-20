@@ -7,18 +7,23 @@ light_login('please_login.php');
 
 $mapsize_height = 1000;
 $mapsize_width = 1000;
-mysql_pconnect($dbhost,$dbuser,$dbpass) or die(mysql_error());
-mysql_select_db($db) or die(mysql_error());
-
-	$my_settings_request = mysql_query("SELECT room, head, body, legs from position where id='$player_id'");
-	$my_settings_row = mysql_fetch_row($my_settings_request);
+$mysql = new mysqli("p:".$dbhost,$dbuser,$dbpass) or die($mysql->error());
+$mysql->select_db($db) or die($mysql->error());
+	/*
+	$my_settings_request = $mysql->query("SELECT room, head, body, legs from position where id='$player_id'");
+	$my_settings_row = $my_settings_request->fetch_row();
 	$room = $my_settings_row[0];
 	$head = $my_settings_row[1];
 	$body = $my_settings_row[2];
 	$legs = $my_settings_row[3];
+	*/
+	$room = 0;
+	$head = 1;
+	$body = 1;
+	$legs = 1;
 	if($head == 0 or $body == 0 or $legs == 0)
 	{
-		mysql_close();
+		$mysql->close();
 		header("location: customize/build.php");
 		exit("Create a character to play Triniate. <a href='customize/build.php'>Click here</a> to create a character");
 	}
@@ -81,11 +86,11 @@ if(!empty($sobjectsarray))
 
 // echo "<script>alert('$room - $background');</script>";
 // echo "<script>alert('You are in room $room');</script>";
-$select_position_request = mysql_query("SELECT id,pos_left,pos_top,health,name,sprite,magic,max_magic,stamina from position where room='$room'") or die(mysql_error());
-$numbah = mysql_num_rows($select_position_request);
+$select_position_request = $mysql->query("SELECT id,pos_left,pos_top,health,name,sprite,magic,max_magic,stamina from position where room='$room'") or die(mysql_error());
+$numbah = $select_position_request->num_rows;
 for($m = 0; $m < $numbah; $m++)
 {
-	$select_position_array = mysql_fetch_array($select_position_request);
+	$select_position_array = $mysql->fetch_array($select_position_request);
 	/*$select_position_number = mysql_num_rows($select_position_request);
 	echo "numb: $select_position_number<br>";*/
 	$play_id[$m] = $select_position_array['id'];
@@ -114,7 +119,7 @@ for($m = 0; $m < $numbah; $m++)
 	}
 }
 // echo $position;
-mysql_close();
+$mysql->close();
 
 
 
@@ -145,18 +150,18 @@ var objects = new Array;
 <script>
 var room = <?php echo round($room);?>;
 var player_id = '<?php echo $player_id;?>';
-var player_name = "<?php echo $player_name;?>";
+var player_name = "test<?php echo time(); ?>";
 var wallsarray = new Array(<?php echo $converted_wallsarray;?>);
-var currentsprite = '<?php echo $my_sprite;?>';
+var currentsprite = 'whocares_112';
 var mapsize_width = <?php echo $mapsize_width;?>;
 var mapsize_height = <?php echo $mapsize_height;?>;
-var fitness = <?php echo $stamina;?>;
-var magic_value = <?php echo $magic;?>;
-var coords = '<?php echo $my_left_pos . "," . $my_top_pos;?>';
-var pos = {x: <?php echo $my_left_pos;?>, y: <?php echo $my_top_pos;?>};
+var fitness = 100;
+var magic_value = 100;
+var coords = '0,0';
+var pos = {x: 0, y: 0};
 var SYSTEM = '<?php echo detect_system();?>';
-var viewportLeft = <?php echo round($viewport_left) - 300;?>;
-var viewportTop = <?php echo round($viewport_top) - 125;?>;
+var viewportLeft = 0;
+var viewportTop = 0;
 var viewportWidth = 640;
 var viewportHeight = 270;
 var viewport = 320;
@@ -876,7 +881,8 @@ var crafting = false;
 //document.onclick = function(){document.getElementById('buttoninput').focus();}
 </script>
 <?php
-include('../analytics/index.php');
+// lol no
+// include('../analytics/index.php');
 ?>
 </head>
 <body>

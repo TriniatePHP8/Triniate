@@ -1,5 +1,7 @@
 <?php
-include_once("functions/mysql_functions.php");
+
+// what is this shit
+// include_once("functions/mysql_functions.php");
 
 
 include_once('include_this.php');
@@ -8,7 +10,7 @@ full_login();
 
 if($logged_in)
 {
-	$mysqli = mysqli_connect($dbhost,$dbuser,$dbpass, $db) or die($mysqli -> error);
+	$mysqli = new mysqli($dbhost,$dbuser,$dbpass, $db) or die($mysqli -> error);
 	$select_open_request = $mysqli -> query("SELECT id, betatester from position where account_id='$user_id'") or die($mysqli -> error);
 	$select_open_num = $select_open_request -> num_rows;
 	if($select_open_num > 0)

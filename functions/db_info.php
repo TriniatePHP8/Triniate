@@ -1,6 +1,7 @@
 <?php
 
-include_once(__DIR__ . '/mysql_functions.php');
+// ewwww, im gonna stick with mysqli
+// include_once(__DIR__ . '/mysql_functions.php');
 
 if(!$mysql_credentials_file_location)
 {

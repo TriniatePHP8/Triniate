@@ -16,14 +16,14 @@ if(!isset($logged_in))
 <title>Project Triniate</title>
 <style>
 body{padding: 0px; margin: 0px;}
-#topscreen,#bottomscreen{width: 310px; background-color: black; color: white; padding: 5px;}
+#topscreen,#bottomscreen{width: 320px; background-color: black; color: white; padding: 5px;}
 #bottomscreen{
 font-size: 10px;
-height: 202px;
+height: 230px;
 background-image: url(<?php echo $triniate_homepage;?>/bottomscreen.png);
 }
 #topscreen{
-height: 208px;
+height: 215px;
 font-size: 16px;
 text-align: center;
 }
@@ -42,7 +42,6 @@ src: url('<?php echo $triniate_homepage;?>/Trinigan.ttf');
 position: relative;
 top: 0px;
 left: 45px;
-color: black;
 width: 220px;
 height: 160px;
 font-size: 12px;
@@ -105,6 +104,11 @@ if(file_exists('../analytics/index.php'))
 	include('../analytics/index.php');
 }
 ?>
+<style>
+div#bottomscreen {
+	color: #fff !important;
+}
+</style>
 </head>
 <body>
 <div id='topscreen'><img class='titleimg' src='<?php echo $triniate_homepage;?>/project_triniate_title.png'></div>
@@ -123,6 +127,8 @@ Password: <input type="password" name="password" width="100"><br>
 Remember me: <input type="checkbox" name="remember_me" value="yes"><br>
 <input type="submit" name="log_in" value="log in"><br>
 <a href='register.php'>I don't have an account.</a>
+<br />
+<?php echo "PHP version " . phpversion(); ?>
 </div>
 </div>
 </body>
@@ -139,13 +145,13 @@ exit();
 <title>Project Triniate</title>
 <style>
 body{padding: 0px; margin: 0px;}
-#topscreen,#bottomscreen{width: 310px; background-color: black; color: white; padding: 5px;}
+#topscreen,#bottomscreen{width: 320px; background-color: black; color: white; padding: 5px;}
 #bottomscreen{
 font-size: 12px;
-min-height: 202px;
+min-height: 230px;
 }
 #topscreen{
-height: 208px;
+height: 215px;
 font-size: 16px;
 text-align: center;
 }
@@ -240,7 +246,8 @@ window.onload = function(){document.body.scrollTop = 218;}
 <body>
 <div id='topscreen'><img class='titleimg' src='<?php echo $triniate_homepage;?>/project_triniate_title.png'><div class='welcome_user'>Welcome, <?php echo htmlentities($username);?></div></div>
 <div id='bottomscreen'>
-<div class='back'><a href='<?php echo $triniate_homepage;?>' class='backlink'>Back</a></div><form method='post'><input type='submit' name='logout' class='logout' value='Log out'></form><br><br>
+<div class='back'><a href='<?php echo $triniate_homepage;?>' class='backlink'>Back</a></div><form method='post'><input type='submit' name='logout' class='logout' value='Log out'></form><br>
+<?php echo phpversion(); ?><br>
 <?php
 
 

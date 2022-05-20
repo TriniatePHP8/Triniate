@@ -2,11 +2,11 @@
 include("../include_this.php");
 light_login();
 
-mysql_pconnect($dbhost,$dbuser,$dbpass) or die(mysql_error());
-mysql_select_db($db) or die(mysql_error());
+$mysql = new mysqli("p:".$dbhost,$dbuser,$dbpass) or die($mysql->error());
+$mysql->select_db($db) or die($mysql->error());
 
-$my_settings_request = mysql_query("SELECT head,body,legs,weapon from position where id='$player_id'");
-$my_settings_row = mysql_fetch_row($my_settings_request);
+$my_settings_request = $mysql->query("SELECT head,body,legs,weapon from position where id='$player_id'");
+$my_settings_row = $mysql->fetch_row($my_settings_request);
 $head = $my_settings_row[0];
 $body = $my_settings_row[1];
 $legs = $my_settings_row[2];
@@ -25,7 +25,7 @@ if($legs == 0 or !is_numeric($legs))
 	$legs = 1;
 }
 
-mysql_close();
+$mysql->close();
 ?>
 <html>
 <head>

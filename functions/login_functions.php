@@ -21,7 +21,7 @@ function full_login()
 	}
 	if(isset($username) and isset($password) and !isset($_POST['logout']))
 	{
-		$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
+		$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $db);
 		$result = $mysqli -> query('SELECT id, username, password_hash from users where username="'.$mysqli->real_escape_string($username).'"') or die($mysqli -> error);
 		if($result -> num_rows < 1)
 		{
@@ -41,7 +41,7 @@ function full_login()
 				$logged_in = true;
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password;
-				if($_POST['remember_me'])
+				if(isset($_POST['remember_me']))
 				{
 					setcookie('username', $username, time()+60*60*24*365);
 					setcookie('password', $password, time()+60*60*24*365);
@@ -59,16 +59,17 @@ function full_login()
 	
 }
 
-function light_login($include_when_dead = false)
+function light_login($include_whendead = false)
 {
 	global $_SESSION,$player_id,$mg,$room,$time,$betatester;
 
 	session_start();
-	if(isset($_SESSION['playerid']) && is_numeric($_SESSION['playerid']) && isset($_SESSION['mg']))
+	if(isset($_SESSION['playerid']) && is_numeric($_SESSION['playerid']) && isset($_SESSION['mg']) && true)
 	{
 		$player_id = $_SESSION['playerid'];
 		$mg = htmlentities($_SESSION['mg']);
-		$room = htmlentities($_SESSION['room']);
+		// $room = htmlentities($_SESSION['room']);
+		$room = 0;
 		$betatester = false;
 		if(isset($_SESSION['betatester']) && $_SESSION['betatester'] == 1)
 		{
@@ -80,7 +81,7 @@ function light_login($include_when_dead = false)
 		}
 		else
 		{
-			if($include_when_dead)
+			if(isset($include_when_dead))
 			{
 				include($include_when_dead);
 				die();
@@ -90,7 +91,7 @@ function light_login($include_when_dead = false)
 	}
 	else
 	{
-		if($include_when_dead)
+		if(isset($include_when_dead))
 		{
 			include($include_when_dead);
 			die();
@@ -103,6 +104,10 @@ function light_login($include_when_dead = false)
 function get_room()
 {
 	global $_SESSION;
-	return($_SESSION['room']);
+	if(isset($_SESSION['room'])){
+		return($_SESSION['room']);
+	} else {
+		return "error";
+	}
 }
 ?>

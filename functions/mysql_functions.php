@@ -7,7 +7,7 @@ if(!function_exists('mysql_connect'))
 		global $mysqli;
 		if($db)
 		{
-			$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass, $db);
+			$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $db);
 			return $mysqli;
 		}
 		$mysqli = mysqli_connect($dbhost, $dbuser, $dbpass);
@@ -41,7 +41,7 @@ if(!function_exists('mysql_connect'))
 	function mysql_close()
 	{
 		global $mysqli;
-		return $mysqli -> close();
+		return $mysqli->close();
 	}
 
 	function mysql_fetch_array($r)
